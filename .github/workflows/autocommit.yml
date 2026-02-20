@@ -14,14 +14,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Make change
-        run: |
-          echo "Last run: $(date)" > last_commit.txt
-
-      - name: Commit and push
+      - name: Make changes and commit
         run: |
           git config --local user.email "winterc0ldsye@gmail.com"
           git config --local user.name "Faishal"
-          git add last_commit.txt
-          git commit -m "Auto commit: $(date)" || echo "No changes to commit"
+
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "Manual trigger detected: Performing 100 commits"
+            for i in {1..100}
+            do
+              echo "Manual boost commit $i: $(date)" >> last_commit.txt
+              git add last_commit.txt
+              git commit -m "Manual boost commit $i: $(date)"
+            done
+          else
+            echo "Scheduled trigger detected: Performing 1 commit"
+            echo "Auto commit: $(date)" >> last_commit.txt
+            git add last_commit.txt
+            git commit -m "Auto commit: $(date)"
+          fi
+
+      - name: Push changes
+        run: |
           git push
