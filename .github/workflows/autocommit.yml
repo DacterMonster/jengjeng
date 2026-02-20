@@ -1,0 +1,25 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: "0 0,6,12,18 * * *" # Runs 4 times a day (UTC)
+  workflow_dispatch:
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Make change
+        run: |
+          echo "Last run: $(date)" > last_commit.txt
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "winterc0ldsye@gmail.com"
+          git config --local user.name "Faishal"
+          git add last_commit.txt
+          git commit -m "Auto commit: $(date)" || echo "No changes to commit"
+          git push
