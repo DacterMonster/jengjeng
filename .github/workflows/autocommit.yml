@@ -14,7 +14,7 @@ jobs:
 
       - name: Make 100 commits
         run: |
-          git config --local user.email "winterc0ldsye@gmail.com"
+          git config --local user.email "fcfaisal51@gmail.com"
           git config --local user.name "Faishal"
 
           echo "Manual trigger: Performing 100 commits"
