@@ -22,7 +22,7 @@ jobs:
           do
             echo "Manual boost commit $i: $(date)" >> last_commit.txt
             git add last_commit.txt
-            git commit -m "Manual boost commit $i: $(date)"
+            git commit --author="Faishal <fcfaisal51@gmail.com>" -m "Manual boost commit $i: $(date)"
           done
 
       - name: Push changes
